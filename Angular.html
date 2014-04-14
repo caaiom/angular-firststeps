@@ -1,0 +1,80 @@
+﻿<html ng-app>
+    <head>
+        <title>Lista de compras</title>
+
+        <link href="css/bootstrap.css" rel="stylesheet"/>
+        <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="js/bootstrap.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>
+        <script src="lista-compras.js"></script>
+
+        <style type="text/css">
+	        .comprado-true {
+				text-decoration: line-through;
+				color: red;
+			}
+        </style>
+    </head>
+    <body>
+    	<div class="container">
+    		<div class="row">
+    			<h1>Testes com AngularJS</h1>
+		    	<input type="text" ng-model="nome" class="form-control" placeholder="Digite seu nome">
+		        <h2>Olá! Meu nome é: {{ nome }}</h2>
+		        <hr />
+	        </div>
+	        <div class="row">
+	        	<h1>Lista de Itens</h1>
+	    	</div>
+	    	<div ng-controller="ListaComprasController">
+	    		<div class="row">
+		    		<table class="table table-striped table-hover">
+		    			<thead>
+		    				<tr>
+		    					<th>Comprado?</th>
+		    					<th>Produto</th>
+		    					<th>Quantidade</th>
+		    					<th></th>
+		    				</tr>
+		    			</thead>
+		    			<tbody>
+		    				<tr ng-repeat="item in itens">
+		    					<td style="width:10%" class="text-center">
+		    						<input type="checkbox" class="" ng-model="item.comprado" ng-disabled="editing" />
+		    					</td>
+		    					<td style="width:50%">
+		    						<strong ng-hide="editing" class="comprado-{{ item.comprado }}">
+		    							{{ item.produto }}
+		    						</strong>
+		    						<input type="text" class="form-control" ng-show="editing" ng-model="item.produto" />
+		    					</td>
+		    					<td style="width:23%">
+		    						<span ng-hide="editing" class="comprado-{{ item.comprado }}">
+		    							{{ item.quantidade }}
+		    						</span>
+		    						<input type="number" class="form-control" ng-show="editing" ng-model="item.quantidade" />
+		    					</td>
+		    					<td>
+		    						<button class="btn btn-default" ng-click="editing = true" ng-hide="editing"><span class="glyphicon glyphicon-pencil"></span> Editar</button>
+		    						<button class="btn btn-default" ng-click="removeItem($index)" ng-hide="editing"><span class="glyphicon glyphicon-remove"></span> Excluir</button>
+		    						<button class="btn btn-default" ng-click="editing = false; editaItem()" ng-show="editing"><span class="glyphicon glyphicon-ok"></span> Salvar</button>
+		    					</td>
+		    				</tr>
+		    			</tbody>
+		    		</table>
+		    	</div>
+	    		<div class="row">
+			    	<form class="form-inline" name="formItem">
+			    		<div class="form-group">
+		    				<input type="text" class="form-control" placeholder="Produto" ng-model="item.produto">
+		  				</div>
+					  	<div class="form-group">
+					    	<input type="number" class="form-control" placeholder="Quantidade" ng-model="item.quantidade">
+				   	  	</div>
+				   	  	<button class="btn btn-default" ng-click="adicionaItem()">Adicionar</button>
+			    	</form>
+		    	</div>
+	    	</div>
+    	</div>
+    </body>
+</html>
